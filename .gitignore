@@ -22,3 +22,5 @@ compile_commands.json
 # Ignore dependencies (if not using a package manager)
 /vendor/
 
+# ignore the compiled binary
+hypr-switcher
