@@ -71,13 +71,10 @@ int main(int argc, char** argv) {
             // Add daemon logic here
         } else if (arg == "-l" || arg == "--launch") {
             std::cout << "Starting as a standalone qt app..." << std::endl;
-
             // Fetch JSON data from hyprctl
             std::string jsonData = exec("hyprctl clients -j");
-
             // Parse JSON data
             std::vector<client> clients = jsonToClient(jsonData);
-
             // Output the clients for debugging
             for (const auto& c : clients) {
                 std::cout << "Client Address: " << c.address << "\n"
