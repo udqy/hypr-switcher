@@ -1,0 +1,24 @@
+# Ignore build directories and files
+build/
+CMakeFiles/
+CMakeCache.txt
+compile_commands.json
+
+# Ignore compiled object files and executables
+*.o
+*.obj
+*.exe
+*.out
+
+# Ignore generated files
+.vscode/
+.idea/
+*.suo
+*.user
+*.sln
+*.xcodeproj/
+*.xcworkspace/
+
+# Ignore dependencies (if not using a package manager)
+/vendor/
+
