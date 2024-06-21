@@ -9,6 +9,31 @@
 
 using json = nlohmann::json;
 
+/*
+/
+                       _oo0oo_
+                      o8888888o
+                      88" . "88
+                      (| -_- |)
+                      0\  =  /0
+                    ___/`---'\___
+                  .' \\|     |// '.
+                 / \\|||  :  |||// \
+                / _||||| -:- |||||- \
+               |   | \\\  -  /// |   |
+               | \_|  ''\---/''  |_/ |
+               \  .-\__  '-'  ___/-. /
+             ___'. .'  /--.--\  `. .'___
+          ."" '<  `.___\_<|>_/___.' >' "".
+         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+         \  \ `_.   \_ __\ /__ _/   .-` /  /
+     =====`-.____`.___ \_____/___.-`___.-'=====
+                       `=---='
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+       Buddha blesses you with no bugs forever
+*/
+
 // Client struct
 struct client {
     std::string address;
@@ -21,6 +46,17 @@ struct client {
     client(const std::string& _address, const std::string& _title, int _workspace, int _monitor, const std::string& _windowClass)
         : address(_address), title(_title), workspace(_workspace), monitor(_monitor), windowClass(_windowClass) {}
 };
+
+/*
+
+what i know:
+focusing to a specific window works like this:--}  hyprctl dispatch focuswindow address:0x55a98c55b850
+
+*/
+
+/*********************/
+/*  helper functions */
+/*********************/
 
 static void help() {
     std::cout << "hypr-switcher usage: hypr-switcher [arg [...]].\n\nArguments:\n"
@@ -60,20 +96,32 @@ std::vector<client> jsonToClient(const std::string& jsonData) {
     return clients;
 }
 
+/*------------------------------------*/
+/* core functions for fetching things */
+/*------------------------------------*/
+
+bool switchFocus(std::string address) {
+  std::string command = "hyprctl dispatch focuswindow address:" + address;
+  return system(command.c_str()) == 0;
+}
+
 int main(int argc, char** argv) {
     for (int i = 1; i < argc; i++) {
         std::string arg = argv[i];
+
         if (arg == "-h" || arg == "--help") {
             help();
             return 0;
-        } else if (arg == "-d" || arg == "--daemon") {
+        } 
+        
+        else if (arg == "-d" || arg == "--daemon") {
             std::cout << "Starting as a daemon..." << std::endl;
             // Add daemon logic here
-        } else if (arg == "-l" || arg == "--launch") {
-            std::cout << "Starting as a standalone qt app..." << std::endl;
-            // Fetch JSON data from hyprctl
+        } 
+        
+        else if (arg == "-l" || arg == "--launch") {
+            std::cout << "Starting as a standalone qt app..." << std::endl;            
             std::string jsonData = exec("hyprctl clients -j");
-            // Parse JSON data
             std::vector<client> clients = jsonToClient(jsonData);
             // Output the clients for debugging
             for (const auto& c : clients) {
